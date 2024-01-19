@@ -78,8 +78,8 @@ def words2digits(inputline):
     return both  # Return None if no word number is found
 
 
-# Open the file 'callibration.txt' for reading
-file1 = open('callibration.txt', 'r')
+# Open the file 'input.txt' for reading
+file1 = open('input.txt', 'r')
 
 line_cal = 0
 result = []

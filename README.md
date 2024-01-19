@@ -21,6 +21,8 @@ Advent_of_Code/
 
 │ ├── day1/
 
+│ │ ├── problem.txt
+
 │ │ ├── input.txt
 
 │ │ ├── solution.py

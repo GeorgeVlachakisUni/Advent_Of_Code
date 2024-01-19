@@ -2,7 +2,7 @@ import re
 from typing import List
 
 # Opens the txt file containing the given calibration values
-file1 = open('callibration.txt', 'r')
+file1 = open('input.txt', 'r')
 line_cal = 0
 result = []
 
