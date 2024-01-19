@@ -1,11 +1,5 @@
 import re
-
-
-
-
-
 def words2digits(inputline):
-    inputline = inputline.rstrip()
     word2digit = {
         'zero': '0',
         'one': '1',
@@ -18,103 +12,63 @@ def words2digits(inputline):
         'eight': '8',
         'nine': '9'
     }
-    first: str = ""
-    x = 0
-    a = False
-    digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    reverse_input = inputline[::-1]
-    i = ['']
-    iconstant = ['']
-    double = ['']
-    for char in inputline:
-        x += 1
-        iconstant.append(iconstant[-1] + char)
-        i.append(i[-1] + char)
-        if any(char in digit for char in i[x]) or any(word in word2digit for word in i[x].split()):
-            first = i[x]
-            if len(first) > 1:
-                for word, digit in word2digit.items():
-                    first = first.replace(word, digit)
-                    x = 0
-                for item in reversed(iconstant):
-                    if inputline.startswith(item):
-                        inputline = inputline[len(item):]
-                        i = ['']
-                        iconstant = ['']
-                break
-            else:
-                x = 0
-                for item in reversed(iconstant):
-                    if inputline.startswith(item):
-                        inputline = inputline[len(item):]
-                        i = ['']
-                        iconstant = ['']
-                break
 
-    while not a:
-        for char in reverse_input:
-            x += 1
-            i.append(char + i[-1])
-            iconstant.append(iconstant[-1] + char)
-            if any(char in digit for char in i[x]) or any(word in word2digit for word in i[x].split()):
-                second = i[x]
-                if len(second) > 1:
-                    for word, digit in word2digit.items():
-                        second = second.replace(word, digit)
-                    for item in reversed(iconstant):
-                        if inputline.startswith(item):
-                            inputline = inputline[len(item):]
-                            i = ['']
-                    x = 0  # Reset x to 0 after processing the second part
-                elif len(second) == 1:
-                    second = char
-                    for item in reversed(iconstant):
-                        if inputline.startswith(item):
-                            inputline = inputline[len(item):]
-                            i = ['']
-                    x = 0  # Reset x to 0 after processing the second part
-                a = True
-                break
+    inputline = inputline.rstrip()
+    reverse_inputline = inputline[::-1]
+    first = ""
+    second =""
+    index = 0
 
-        reverse_input = reverse_input[1:]
-        i = ['']
-        x = -1
+    # Using regular expression to find all non-digit sequences ('\D+') or digit sequences ('\d')
+    # in the inputline. This separates the alphanumeric characters and digits, returning a list in the original order.
+    result = re.findall(r'\D+|\d', inputline)
+    reverse_result = re.findall(r'\D+|\d', reverse_inputline)
 
-    # Assuming you want to concatenate first and second
-    result : int = ''.join(first + second)
-    return result
-    # while 1:
-    #     for char in reverse_input:
-    #         x += 1
-    #         i.append(char + i[-1])
-    #         if any(char in digit for char in i[x]) or any(word in word2digit for word in i[x].split()):
-    #             second = i[x]
-    #             if len(second) > 1:
-    #                 for word, digit in word2digit.items():
-    #                     second = second.replace(word, digit)
-    #                     x = 0
-    #             elif len(second) == 1:
-    #                 second = char
-    #                 x = 0
-    #             break
-    #     reverse_input = reverse_input[1:]
-    #     i = ['']
-    #     x = 0
-    #
-    # double = double(''.join(first+second))
+    #iterates between each split item from the list "result"
+    for item in result:
+        if item.isalpha():
+            while len(item) > 0:
+                for char in item:
+                    first += char
+                    if first in word2digit:
+                        first = word2digit[first]
+                        item = ""
+                        break
+                else:
+                    item = item[1:]
+                    first = ""
+            result = result[1:]
+
+        elif item.isdigit():
+            first = item
+            result = result[1:]
+        if first != "":
+            break
+
+    for item in reverse_result:
+        if item.isalpha():
+            while len(item) > 0:
+                for char in item:
+                    second = char + second
+                    if second in word2digit:
+                        second = word2digit[second]
+                        item = ""
+                        break
+                else:
+                    item = item[1:]
+                    second = ""
+            result = result[1:]
+
+        elif item.isdigit():
+            second = item
+            result = result[1:]
+        if second != "":
+            break
+
+    both = first + second
+    return both  # Return None if no word number is found
 
 
-
-
-    # i.append(''.join(i + char))
-    # for word, digit in word2digit.items():
-    #         inputline = inputline.replace(word, digit)
-
-
-
-
-
-#opens the txt containing the given the callibration values
 file1 = open('callibration.txt', 'r')
 line_cal = 0
 result = []
@@ -133,5 +87,3 @@ int_result = sum(int_list)
 
 
 print(int_result)
-
-
