@@ -3,7 +3,6 @@ from typing import List
 
 # Opens the txt file containing the given calibration values
 file1 = open('input.txt', 'r')
-line_cal = 0
 result = []
 
 # Iterate through each line in the file
