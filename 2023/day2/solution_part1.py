@@ -40,6 +40,7 @@ for line in file1:
             if f == (len(input_line)-1):
                 finalist_char.append(input_line[0])
 
+        #prints the games that disqualified and the reason why
         else:
             if red > 12:
                 print(input_line[0] + " " + str(red) + " " + "red")
